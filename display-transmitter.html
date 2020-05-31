@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+   <body>
+      <!-- <p>Click below to change the brightness and contrast of the image.</p> -->
+      <!-- <button onclick="display()">Edit Image</button><br><br> -->
+      <img id="myID" src="21-min.jpg"
+         alt="Tutorials Library" width="900" height="600">
+      <script>
+        var transmitText = "DOSE BOYS"
+        var brightnessText = "";
+
+        function asciiToBinary(input) {
+          output = "10101010 ";
+          for (var i = 0; i < input.length; i++) {
+              output += (0b100000000 + input[i].charCodeAt(0)).toString(2).substring(1) + " ";
+          }
+          output += "00000000"
+          return output
+        }
+
+        var encodedText = asciiToBinary(transmitText);
+
+        encodedText = encodedText.replace(/\s/g, '');
+        console.log(encodedText);
+        var i = 0;
+        var transmittedText = ""
+
+        function setFrequency() {
+          // console.log("Transmitting at " + refreshRate);
+          if (encodedText[i] == 1) {
+            brightnessText = "brightness(100%)";
+            transmittedText += "1"
+          } else {
+            brightnessText = "brightness(50%)";
+            transmittedText += "0"
+          }
+
+          i+= 1;
+
+          if (i == encodedText.length) {
+            console.log(transmittedText);
+            transmittedText = "";
+            i = 0;
+          }
+
+          document.getElementById("myID").style.filter = brightnessText;
+          setTimeout(setFrequency, 1000/(30/4));
+        }
+
+        setFrequency();
+
+      </script>
+   </body>
+</html>
+
